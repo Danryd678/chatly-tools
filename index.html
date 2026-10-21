@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatly Tools — AI tools, simplified</title>
+<meta name="description" content="A big directory of AI tools — chat, image, video, voice and music — each labelled FREE, FREE + PAID or PAID, plus handy tools that run right in your browser.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#07090f; --card:rgba(255,255,255,.05); --card-border:rgba(255,255,255,.09);
+    --teal:#14e0c8; --purple:#9b5cff; --text:#f2f5f9; --muted:#9aa7b8;
+  }
+  body{ font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); min-height:100vh;
+    background-image:radial-gradient(900px 500px at 15% -10%, rgba(20,224,200,.16), transparent 60%),
+                     radial-gradient(900px 600px at 90% 0%, rgba(155,92,255,.18), transparent 60%); }
+  .wrap{ max-width:1080px; margin:0 auto; padding:20px 16px 60px; }
+  header{ text-align:center; padding:38px 10px 10px; }
+  .logo{ font-size:2.4rem; font-weight:800; letter-spacing:-.5px;
+    background:linear-gradient(90deg,var(--teal),var(--purple)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tagline{ color:var(--muted); margin-top:8px; font-size:1.02rem; }
+  .tagline b{ color:var(--text); }
+  .searchbox{ margin:26px auto 6px; max-width:560px; }
+  .searchbox input{ width:100%; padding:14px 18px; border-radius:14px; border:1px solid var(--card-border);
+    background:rgba(255,255,255,.06); color:var(--text); font-size:1rem; outline:none; }
+  .searchbox input:focus{ border-color:var(--teal); }
+  h2.section{ margin:40px 0 6px; font-size:1.45rem; }
+  p.section-sub{ color:var(--muted); margin-bottom:16px; font-size:.95rem; line-height:1.55; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 20px; justify-content:center; }
+  .chip{ padding:9px 16px; border-radius:999px; border:1px solid var(--card-border); background:var(--card);
+    color:var(--text); cursor:pointer; font-size:.92rem; transition:.15s; }
+  .chip:hover{ border-color:var(--teal); }
+  .chip.active{ background:linear-gradient(90deg,var(--teal),var(--purple)); color:#06121a; font-weight:700; border-color:transparent; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
+  .tool-card{ background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:18px;
+    display:flex; flex-direction:column; gap:8px; backdrop-filter:blur(6px); }
+  .tool-card .icon{ font-size:1.7rem; }
+  .tool-card h3{ font-size:1.05rem; }
+  .tool-card p{ color:var(--muted); font-size:.88rem; line-height:1.45; flex:1; }
+  .badge{ align-self:flex-start; font-size:.72rem; font-weight:800; padding:4px 10px; border-radius:999px; letter-spacing:.3px; }
+  .badge.free{ background:rgba(20,224,200,.15); color:var(--teal); border:1px solid rgba(20,224,200,.4); }
+  .badge.freemium{ background:rgba(255,197,61,.13); color:#ffc53d; border:1px solid rgba(255,197,61,.4); }
+  .badge.paid{ background:rgba(255,92,120,.12); color:#ff8296; border:1px solid rgba(255,92,120,.4); }
+  .detail{ color:var(--muted); font-size:.8rem; margin-top:-2px; }
+  .visit{ margin-top:4px; text-align:center; text-decoration:none; font-weight:700; font-size:.92rem; color:#06121a;
+    background:linear-gradient(90deg,var(--teal),var(--purple)); padding:10px; border-radius:10px; }
+  .visit:active{ opacity:.85; }
+  .empty{ color:var(--muted); text-align:center; padding:26px 0; display:none; }
+  .more-wrap{ text-align:center; margin-top:20px; }
+  .ptool{ background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px; margin-bottom:14px; }
+  .ptool h3{ margin-bottom:4px; font-size:1.1rem; }
+  .ptool .sub{ color:var(--muted); font-size:.88rem; margin-bottom:12px; }
+  .ptool textarea, .ptool input[type=text], .ptool select{ width:100%; padding:11px 13px; border-radius:10px;
+    border:1px solid var(--card-border); background:rgba(255,255,255,.06); color:var(--text); font-size:.95rem; outline:none; }
+  .ptool textarea{ min-height:90px; resize:vertical; }
+  .row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:center; }
+  .btn{ padding:10px 16px; border:none; border-radius:10px; cursor:pointer; font-weight:700; font-size:.9rem;
+    background:linear-gradient(90deg,var(--teal),var(--purple)); color:#06121a; }
+  .btn.ghost{ background:rgba(255,255,255,.08); color:var(--text); border:1px solid var(--card-border); }
+  .btn:active{ opacity:.85; }
+  .out{ margin-top:10px; color:var(--muted); font-size:.9rem; word-break:break-all; }
+  .out b{ color:var(--text); }
+  #qrOut{ margin-top:12px; display:flex; justify-content:center; }
+  #qrOut table{ background:#fff; padding:10px; border-radius:10px; }
+  input[type=range]{ accent-color:var(--teal); }
+  label.chk{ color:var(--muted); font-size:.9rem; display:flex; gap:6px; align-items:center; }
+  footer{ text-align:center; color:var(--muted); font-size:.85rem; margin-top:48px; line-height:1.6; }
+  footer b{ color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">Chatly Tools</div>
+    <p class="tagline">AI tools, <b>simplified</b>. <span id="toolCount"></span> real tools in one place —<br>plus handy tools that run right here in your browser. No signup, no watermark.</p>
+    <div class="searchbox"><input id="searchInput" type="text" placeholder="🔍 Search tools… e.g. video, logo, music, pdf"></div>
+  </header>
+
+  <h2 class="section">What do you want to make?</h2>
+  <p class="section-sub">Pick a category. Every card is labelled clearly — <b>✅ FREE</b>, <b>🟡 FREE + PAID</b> (free plan, with paid upgrades) or <b>💰 PAID</b> — so you know before you tap.</p>
+  <div class="chips" id="chips">
+    <button class="chip active" data-cat="all">All</button>
+    <button class="chip" data-cat="chat">💬 Chat &amp; Writing</button>
+    <button class="chip" data-cat="image">🎨 Image</button>
+    <button class="chip" data-cat="video">🎬 Video</button>
+    <button class="chip" data-cat="voice">🎙️ Voice &amp; Music</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="emptyMsg">No tools match that search. Try another word.</div>
+  <div class="more-wrap"><button class="btn" id="moreBtn" style="display:none">Load more tools</button></div>
+
+  <h2 class="section">Free tools that run right here</h2>
+  <p class="section-sub">These work inside this page — nothing is uploaded anywhere.</p>
+
+  <div class="ptool">
+    <h3>🔳 QR Code Maker</h3>
+    <p class="sub">Type any text or link and get a QR code instantly.</p>
+    <input type="text" id="qrText" placeholder="Paste a link or type text…">
+    <div class="row"><button class="btn" id="qrBtn">Make QR code</button></div>
+    <div id="qrOut"></div>
+  </div>
+
+  <div class="ptool">
+    <h3>🗜️ Image Compressor</h3>
+    <p class="sub">Shrink a photo's file size in your browser — the image never leaves your phone.</p>
+    <input type="file" id="imgFile" accept="image/*">
+    <div class="row">
+      <label class="chk">Quality <input type="range" id="imgQuality" min="10" max="95" value="70"> <span id="imgQVal">70%</span></label>
+      <button class="btn" id="imgBtn">Compress</button>
+    </div>
+    <div class="out" id="imgOut"></div>
+  </div>
+
+  <div class="ptool">
+    <h3>🔐 Password Generator</h3>
+    <p class="sub">Strong random passwords, made on your device.</p>
+    <div class="row">
+      <label class="chk">Length <input type="range" id="pwLen" min="8" max="32" value="16"> <span id="pwLenVal">16</span></label>
+      <label class="chk"><input type="checkbox" id="pwSym" checked> Symbols</label>
+      <label class="chk"><input type="checkbox" id="pwNum" checked> Numbers</label>
+      <button class="btn" id="pwBtn">Generate</button>
+      <button class="btn ghost" id="pwCopy">Copy</button>
+    </div>
+    <div class="out"><b id="pwOut">—</b></div>
+  </div>
+
+  <div class="ptool">
+    <h3>🔤 Word Counter &amp; Case Converter</h3>
+    <p class="sub">Count words and change text case in one tap.</p>
+    <textarea id="wcText" placeholder="Type or paste your text here…"></textarea>
+    <div class="row">
+      <button class="btn ghost" data-case="upper">UPPERCASE</button>
+      <button class="btn ghost" data-case="lower">lowercase</button>
+      <button class="btn ghost" data-case="title">Title Case</button>
+      <button class="btn" id="wcCopy">Copy text</button>
+    </div>
+    <div class="out" id="wcOut">0 words · 0 characters</div>
+  </div>
+
+  <div class="ptool">
+    <h3>🔊 Text to Voice</h3>
+    <p class="sub">Your browser reads any text aloud — free, built into your phone.</p>
+    <textarea id="ttsText" placeholder="Type what you want to hear…"></textarea>
+    <div class="row">
+      <label class="chk">Speed <input type="range" id="ttsRate" min="5" max="20" value="10"> <span id="ttsRateVal">1.0×</span></label>
+      <button class="btn" id="ttsBtn">▶ Speak</button>
+      <button class="btn ghost" id="ttsStop">■ Stop</button>
+    </div>
+  </div>
+
+  <footer>
+    <b>Chatly Tools</b> — AI tools, simplified.<br>
+    Every card is labelled FREE, FREE + PAID or PAID; plans and prices are set by each site and can change.<br>
+    The tools on this page run 100% in your browser.
+  </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const TOOLS = [
+  // ---------- Chat & Writing ----------
+  {cat:'chat', icon:'🤖', name:'ChatGPT', desc:'The famous AI chatbot — ask, write, brainstorm, code.', type:'freemium', free:'Free plan, Plus is paid', url:'https://chatgpt.com'},
+  {cat:'chat', icon:'🧠', name:'Claude', desc:'Smart, careful AI for writing and long documents.', type:'freemium', free:'Free plan, Pro is paid', url:'https://claude.ai'},
+  {cat:'chat', icon:'✨', name:'Google Gemini', desc:'Google\u2019s AI assistant for chat and research.', type:'freemium', free:'Free plan, Advanced is paid', url:'https://gemini.google.com'},
+  {cat:'chat', icon:'🐋', name:'DeepSeek', desc:'Strong AI chat — maths, coding, reasoning.', type:'free', free:'Free to use', url:'https://chat.deepseek.com'},
+  {cat:'chat', icon:'🔎', name:'Perplexity', desc:'AI search that answers with real sources.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.perplexity.ai'},
+  {cat:'chat', icon:'🪟', name:'Microsoft Copilot', desc:'AI chat with image generation built in.', type:'free', free:'Free to use', url:'https://copilot.microsoft.com'},
+  {cat:'chat', icon:'𝕏', name:'Grok', desc:'xAI\u2019s chatbot — witty, real-time answers.', type:'freemium', free:'Free with limits, paid plans', url:'https://grok.com'},
+  {cat:'chat', icon:'🎭', name:'Poe', desc:'Chat with many AI models in one app.', type:'freemium', free:'Free points daily, paid plans', url:'https://poe.com'},
+  {cat:'chat', icon:'🌐', name:'Meta AI', desc:'Meta\u2019s free AI assistant.', type:'free', free:'Free to use', url:'https://www.meta.ai'},
+  {cat:'chat', icon:'🌬️', name:'Mistral Le Chat', desc:'Fast European AI chat.', type:'freemium', free:'Free plan, Pro is paid', url:'https://chat.mistral.ai'},
+  {cat:'chat', icon:'🤗', name:'HuggingChat', desc:'Chat with open-source AI models.', type:'free', free:'Free to use', url:'https://huggingface.co/chat'},
+  {cat:'chat', icon:'🎭', name:'Character.AI', desc:'Chat with AI characters and personas.', type:'freemium', free:'Free plan, paid plan', url:'https://character.ai'},
+  {cat:'chat', icon:'🔍', name:'You.com', desc:'AI search and chat combined.', type:'freemium', free:'Free plan, Pro is paid', url:'https://you.com'},
+  {cat:'chat', icon:'✍️', name:'Jasper', desc:'AI writing for marketing and ads.', type:'paid', free:'Paid plans only', url:'https://www.jasper.ai'},
+  {cat:'chat', icon:'📝', name:'Notion AI', desc:'AI writing inside Notion.', type:'paid', free:'Paid add-on', url:'https://www.notion.com/product/ai'},
+  {cat:'chat', icon:'🚀', name:'Writesonic', desc:'AI writer for blogs, ads and chatbots.', type:'freemium', free:'Free plan, paid plans', url:'https://writesonic.com'},
+  {cat:'chat', icon:'📄', name:'Copy.ai', desc:'Marketing copy in seconds.', type:'freemium', free:'Free plan, paid plans', url:'https://www.copy.ai'},
+  {cat:'chat', icon:'⚡', name:'Rytr', desc:'Quick, cheap AI writing assistant.', type:'freemium', free:'Free plan, paid plans', url:'https://rytr.me'},
+  {cat:'chat', icon:'✔️', name:'Grammarly', desc:'Fix grammar and improve your writing.', type:'freemium', free:'Free plan, Premium is paid', url:'https://www.grammarly.com'},
+  {cat:'chat', icon:'🦜', name:'QuillBot', desc:'Paraphrase and rewrite any text.', type:'freemium', free:'Free plan, Premium is paid', url:'https://quillbot.com'},
+  {cat:'chat', icon:'🎵', name:'Wordtune', desc:'Rewrite sentences in different tones.', type:'freemium', free:'Free plan, paid plans', url:'https://www.wordtune.com'},
+  {cat:'chat', icon:'📚', name:'Sudowrite', desc:'AI partner for fiction writers.', type:'paid', free:'Free trial, then paid', url:'https://www.sudowrite.com'},
+  {cat:'chat', icon:'📖', name:'NovelAI', desc:'AI storytelling and novel writing.', type:'paid', free:'Paid plans only', url:'https://novelai.net'},
+  {cat:'chat', icon:'💬', name:'ChatPDF', desc:'Ask questions about any PDF.', type:'freemium', free:'Free plan, Plus is paid', url:'https://www.chatpdf.com'},
+  {cat:'chat', icon:'🧾', name:'Humata', desc:'Chat with your documents.', type:'freemium', free:'Free plan, paid plans', url:'https://www.humata.ai'},
+  {cat:'chat', icon:'🔬', name:'Elicit', desc:'AI research assistant for papers.', type:'freemium', free:'Free credits, paid plans', url:'https://elicit.com'},
+  {cat:'chat', icon:'🎓', name:'Consensus', desc:'Answers from real scientific studies.', type:'freemium', free:'Free plan, Premium is paid', url:'https://consensus.app'},
+  {cat:'chat', icon:'🚀', name:'SciSpace', desc:'Explain and chat with research papers.', type:'freemium', free:'Free plan, Premium is paid', url:'https://scispace.com'},
+  {cat:'chat', icon:'🎓', name:'Jenni AI', desc:'AI essay and academic writing help.', type:'freemium', free:'Free plan, paid plans', url:'https://jenni.ai'},
+  {cat:'chat', icon:'🧩', name:'TextCortex', desc:'Personal AI writer that learns your style.', type:'freemium', free:'Free plan, paid plans', url:'https://textcortex.com'},
+  {cat:'chat', icon:'⌨️', name:'HyperWrite', desc:'AI writing assistant everywhere you type.', type:'freemium', free:'Free plan, Premium is paid', url:'https://www.hyperwriteai.com'},
+  {cat:'chat', icon:'📰', name:'LongShot AI', desc:'Fact-checked long-form content writer.', type:'freemium', free:'Free trial, then paid', url:'https://www.longshot.ai'},
+  {cat:'chat', icon:'🎨', name:'Simplified', desc:'Design, write and schedule in one app.', type:'freemium', free:'Free plan, paid plans', url:'https://simplified.com'},
+  {cat:'chat', icon:'📊', name:'Anyword', desc:'Marketing copy scored by predicted results.', type:'paid', free:'Free trial, then paid', url:'https://anyword.com'},
+  {cat:'chat', icon:'🦦', name:'Otter.ai', desc:'Meeting notes and transcripts automatically.', type:'freemium', free:'Free plan, paid plans', url:'https://otter.ai'},
+  {cat:'chat', icon:'🪰', name:'Fireflies.ai', desc:'Records and transcribes your meetings.', type:'freemium', free:'Free plan, paid plans', url:'https://fireflies.ai'},
+  {cat:'chat', icon:'⏺️', name:'tl;dv', desc:'Record, transcribe and clip meetings.', type:'freemium', free:'Free plan, paid plans', url:'https://tldv.io'},
+  {cat:'chat', icon:'📝', name:'Fathom', desc:'Free AI meeting notetaker.', type:'freemium', free:'Free plan, paid plans', url:'https://fathom.video'},
+  {cat:'chat', icon:'🤝', name:'MeetGeek', desc:'AI meeting summaries and highlights.', type:'freemium', free:'Free plan, paid plans', url:'https://meetgeek.ai'},
+  {cat:'chat', icon:'🎙️', name:'Notta', desc:'Transcribe audio and meetings to text.', type:'freemium', free:'Free plan, paid plans', url:'https://www.notta.ai'},
+  {cat:'chat', icon:'🎧', name:'Krisp', desc:'Removes noise from calls, plus AI notes.', type:'freemium', free:'Free plan, paid plans', url:'https://krisp.ai'},
+  {cat:'chat', icon:'📖', name:'Read AI', desc:'Meeting reports, summaries and coaching.', type:'freemium', free:'Free plan, paid plans', url:'https://www.read.ai'},
+  {cat:'chat', icon:'📌', name:'Tactiq', desc:'Live captions and notes for meetings.', type:'freemium', free:'Free plan, paid plans', url:'https://tactiq.io'},
+  {cat:'chat', icon:'🌾', name:'Grain', desc:'Record calls and clip key moments.', type:'freemium', free:'Free plan, paid plans', url:'https://grain.com'},
+  {cat:'chat', icon:'🦸', name:'Supernormal', desc:'Beautiful AI notes from your meetings.', type:'freemium', free:'Free plan, paid plans', url:'https://supernormal.com'},
+  {cat:'image', icon:'⚡', name:'TurboScribe', desc:'Fast AI transcription with free tries.', type:'freemium', free:'Free files daily, paid plans', url:'https://turboscribe.ai'},
+  {cat:'chat', icon:'🌍', name:'Transkriptor', desc:'Transcribe audio in 100+ languages.', type:'freemium', free:'Free trial, then paid', url:'https://transkriptor.com'},
+  {cat:'chat', icon:'😊', name:'Happy Scribe', desc:'Transcription and subtitles service.', type:'freemium', free:'Free trial, then paid', url:'https://www.happyscribe.com'},
+  {cat:'chat', icon:'🎓', name:'Khanmigo', desc:'Khan Academy\u2019s AI tutor and teacher help.', type:'freemium', free:'Free for teachers, paid for learners', url:'https://www.khanmigo.ai'},
+  {cat:'chat', icon:'🪄', name:'MagicSchool AI', desc:'AI tools made for teachers.', type:'freemium', free:'Free plan, Plus is paid', url:'https://www.magicschool.ai'},
+  {cat:'chat', icon:'🏫', name:'SchoolAI', desc:'AI learning spaces for classrooms.', type:'freemium', free:'Free plan, paid plans', url:'https://schoolai.com'},
+  {cat:'chat', icon:'📄', name:'Diffit', desc:'Turn any text into student resources.', type:'freemium', free:'Free plan, paid plans', url:'https://web.diffit.me'},
+  {cat:'chat', icon:'🎤', name:'Curipod', desc:'Interactive lessons with AI feedback.', type:'freemium', free:'Free plan, paid plans', url:'https://curipod.com'},
+  {cat:'chat', icon:'⚡', name:'Brisk Teaching', desc:'AI teaching assistant in your browser.', type:'freemium', free:'Free plan, paid plans', url:'https://www.briskteaching.com'},
+  {cat:'chat', icon:'❓', name:'QuestionWell', desc:'Generate questions from any text.', type:'freemium', free:'Free plan, paid plans', url:'https://questionwell.org'},
+  {cat:'chat', icon:'🌍', name:'Twee', desc:'AI tools for English teachers.', type:'freemium', free:'Free plan, paid plans', url:'https://twee.com'},
+  {cat:'chat', icon:'👹', name:'Goblin Tools', desc:'Tiny free tools that make tasks easier.', type:'free', free:'Free to use', url:'https://goblin.tools'},
+  {cat:'chat', icon:'📊', name:'Gamma', desc:'AI presentations, docs and websites.', type:'freemium', free:'Free credits, paid plans', url:'https://gamma.app'},
+  {cat:'chat', icon:'🎞️', name:'SlidesAI', desc:'Turn text into slides automatically.', type:'freemium', free:'Free plan, paid plans', url:'https://www.slidesai.io'},
+  {cat:'chat', icon:'💅', name:'Beautiful.ai', desc:'Slides that design themselves.', type:'paid', free:'Free trial, then paid', url:'https://www.beautiful.ai'},
+  {cat:'chat', icon:'📑', name:'Slidesgo', desc:'Free slide templates plus AI maker.', type:'freemium', free:'Free plan, Premium is paid', url:'https://slidesgo.com'},
+  {cat:'chat', icon:'🦑', name:'Decktopus', desc:'AI presentation maker.', type:'freemium', free:'Free plan, paid plans', url:'https://www.decktopus.com'},
+  {cat:'chat', icon:'🎯', name:'Pitch', desc:'Fast, beautiful team presentations.', type:'freemium', free:'Free plan, paid plans', url:'https://pitch.com'},
+  {cat:'chat', icon:'➕', name:'Plus AI', desc:'AI slides inside Google Slides and Docs.', type:'freemium', free:'Free trial, then paid', url:'https://www.plusdocs.com'},
+  {cat:'chat', icon:'🫘', name:'Slidebean', desc:'Pitch deck maker for startups.', type:'freemium', free:'Free to start, paid plans', url:'https://slidebean.com'},
+  {cat:'chat', icon:'🦉', name:'Monica', desc:'All-in-one AI assistant extension.', type:'freemium', free:'Free plan, paid plans', url:'https://monica.im'},
+  {cat:'chat', icon:'🧙', name:'Merlin', desc:'AI assistant for the whole web.', type:'freemium', free:'Free queries daily, paid plans', url:'https://www.getmerlin.in'},
+  {cat:'chat', icon:'🚀', name:'MaxAI', desc:'Use AI on any website in one click.', type:'freemium', free:'Free plan, paid plans', url:'https://www.maxai.me'},
+  {cat:'chat', icon:'📎', name:'Sider', desc:'ChatGPT sidebar with many models.', type:'freemium', free:'Free plan, paid plans', url:'https://sider.ai'},
+  {cat:'chat', icon:'💜', name:'Replika', desc:'An AI companion who chats with you.', type:'freemium', free:'Free plan, Pro is paid', url:'https://replika.com'},
+  {cat:'chat', icon:'🥧', name:'Pi', desc:'A kind, personal AI to talk to.', type:'free', free:'Free to use', url:'https://pi.ai'},
+  {cat:'chat', icon:'🤖', name:'Chatbase', desc:'Build a chatbot trained on your data.', type:'freemium', free:'Free plan, paid plans', url:'https://www.chatbase.co'},
+  {cat:'chat', icon:'🎧', name:'Tidio', desc:'Live chat and AI chatbots for shops.', type:'freemium', free:'Free plan, paid plans', url:'https://www.tidio.com'},
+  {cat:'chat', icon:'📣', name:'ManyChat', desc:'Automate Instagram and WhatsApp chats.', type:'freemium', free:'Free plan, Pro is paid', url:'https://manychat.com'},
+  {cat:'chat', icon:'⛽', name:'Chatfuel', desc:'AI chatbots for WhatsApp and Instagram.', type:'freemium', free:'Free trial, then paid', url:'https://chatfuel.com'},
+  {cat:'chat', icon:'🌊', name:'Voiceflow', desc:'Design and build AI agents visually.', type:'freemium', free:'Free plan, paid plans', url:'https://www.voiceflow.com'},
+  {cat:'chat', icon:'🤖', name:'Botpress', desc:'Build GPT chatbots for your site.', type:'freemium', free:'Free plan, paid plans', url:'https://botpress.com'},
+  {cat:'chat', icon:'🚜', name:'Landbot', desc:'No-code chatbots for web and WhatsApp.', type:'freemium', free:'Free plan, paid plans', url:'https://landbot.io'},
+  {cat:'chat', icon:'📬', name:'Crisp', desc:'Support inbox with AI chatbot.', type:'freemium', free:'Free plan, paid plans', url:'https://crisp.chat'},
+  {cat:'chat', icon:'🟢', name:'JivoChat', desc:'Live chat and chatbots for websites.', type:'freemium', free:'Free plan, paid plans', url:'https://www.jivochat.com'},
+  {cat:'chat', icon:'📚', name:'Scholarcy', desc:'Summarise research papers instantly.', type:'freemium', free:'Free plan, paid plans', url:'https://www.scholarcy.com'},
+  {cat:'chat', icon:'🎓', name:'Semantic Scholar', desc:'Free AI search over scientific papers.', type:'free', free:'Free to use', url:'https://www.semanticscholar.org'},
+  {cat:'chat', icon:'🐇', name:'Research Rabbit', desc:'Discover papers like a playlist.', type:'free', free:'Free to use', url:'https://www.researchrabbit.ai'},
+  {cat:'chat', icon:'🗺️', name:'Litmaps', desc:'Visual maps of research literature.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.litmaps.com'},
+  {cat:'chat', icon:'🔗', name:'Connected Papers', desc:'Explore related papers as a graph.', type:'freemium', free:'Free tries, paid plans', url:'https://www.connectedpapers.com'},
+  {cat:'chat', icon:'🧐', name:'Explainpaper', desc:'Upload a paper, get it explained simply.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.explainpaper.com'},
+  {cat:'chat', icon:'🌐', name:'LanguageTool', desc:'Grammar checker for 30+ languages.', type:'freemium', free:'Free plan, Premium is paid', url:'https://languagetool.org'},
+  {cat:'chat', icon:'🫚', name:'Ginger', desc:'Grammar and sentence rephrasing.', type:'freemium', free:'Free plan, Premium is paid', url:'https://www.gingersoftware.com'},
+  {cat:'chat', icon:'✒️', name:'ProWritingAid', desc:'Deep writing reports and coaching.', type:'freemium', free:'Free plan, Premium is paid', url:'https://prowritingaid.com'},
+  {cat:'chat', icon:'📖', name:'Hemingway Editor', desc:'Makes your writing bold and clear.', type:'free', free:'Free online version', url:'https://hemingwayapp.com'},
+  {cat:'chat', icon:'🇩🇪', name:'DeepL Write', desc:'AI writing companion from DeepL.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.deepl.com/write'},
+  {cat:'chat', icon:'🔍', name:'Ludwig', desc:'Find the perfect English sentence.', type:'freemium', free:'Free plan, Premium is paid', url:'https://ludwig.guru'},
+  {cat:'chat', icon:'🌱', name:'Sapling', desc:'AI writing assistant for teams.', type:'freemium', free:'Free plan, Pro is paid', url:'https://sapling.ai'},
+  {cat:'chat', icon:'🖋️', name:'INK', desc:'AI writer and SEO assistant.', type:'freemium', free:'Free plan, paid plans', url:'https://inkforall.com'},
+  {cat:'chat', icon:'🤖', name:'GPTZero', desc:'Detect AI-written text.', type:'freemium', free:'Free plan, paid plans', url:'https://gptzero.me'},
+  {cat:'chat', icon:'🕵️', name:'Copyleaks', desc:'AI and plagiarism detection.', type:'freemium', free:'Free tries, paid plans', url:'https://copyleaks.com'},
+  {cat:'chat', icon:'0️⃣', name:'ZeroGPT', desc:'Free AI content detector.', type:'free', free:'Free (with ads)', url:'https://www.zerogpt.com'},
+  {cat:'chat', icon:'📋', name:'SmallSEOTools', desc:'Free plagiarism checker and SEO tools.', type:'free', free:'Free to use', url:'https://smallseotools.com'},
+  {cat:'chat', icon:'📈', name:'Scalenut', desc:'SEO content planning and writing.', type:'freemium', free:'Free trial, then paid', url:'https://www.scalenut.com'},
+  {cat:'chat', icon:'🐨', name:'Koala', desc:'KoalaWriter — AI articles in one click.', type:'freemium', free:'Free tries, paid plans', url:'https://koala.sh'},
+  {cat:'chat', icon:'🏄', name:'Surfer', desc:'SEO content editor used by pros.', type:'paid', free:'Paid plans only', url:'https://surferseo.com'},
+  {cat:'chat', icon:'✉️', name:'Superhuman', desc:'The fastest email experience, with AI.', type:'paid', free:'Paid plans only', url:'https://superhuman.com'},
+  {cat:'chat', icon:'🌊', name:'Shortwave', desc:'AI email client built on Gmail.', type:'freemium', free:'Free plan, paid plans', url:'https://www.shortwave.com'},
+  {cat:'chat', icon:'⚡', name:'Originality.ai', desc:'AI detection and plagiarism for publishers.', type:'paid', free:'Paid credits', url:'https://originality.ai'},
+  // ---------- Image ----------
+  {cat:'image', icon:'🖼️', name:'Google Flow', desc:'Google\u2019s AI studio — images and Veo clips.', type:'freemium', free:'50 free credits/day, paid plans', url:'https://flow.google.com'},
+  {cat:'image', icon:'🦁', name:'Leonardo AI', desc:'High-quality AI images and game art.', type:'freemium', free:'Free tokens daily, paid plans', url:'https://leonardo.ai'},
+  {cat:'image', icon:'💡', name:'Ideogram', desc:'AI images with readable text — posters, logos.', type:'freemium', free:'Free plan, paid plans', url:'https://ideogram.ai'},
+  {cat:'image', icon:'🎨', name:'Bing Image Creator', desc:'Microsoft\u2019s AI image maker (DALL\u00b7E).', type:'free', free:'Free to use', url:'https://www.bing.com/images/create'},
+  {cat:'image', icon:'🌙', name:'NightCafe', desc:'Easy AI art with daily credits.', type:'freemium', free:'Free credits daily, paid packs', url:'https://creator.nightcafe.studio'},
+  {cat:'image', icon:'🖍️', name:'Craiyon', desc:'Simple AI image generator, no signup.', type:'free', free:'Free (with ads)', url:'https://www.craiyon.com'},
+  {cat:'image', icon:'🌊', name:'Midjourney', desc:'The most artistic AI image generator.', type:'paid', free:'Paid plans only, no free tier', url:'https://www.midjourney.com'},
+  {cat:'image', icon:'🔥', name:'Adobe Firefly', desc:'Adobe\u2019s AI images, safe for business use.', type:'freemium', free:'Free credits monthly, paid plans', url:'https://firefly.adobe.com'},
+  {cat:'image', icon:'🎭', name:'Canva', desc:'Design anything, with AI tools inside.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.canva.com'},
+  {cat:'image', icon:'🔤', name:'Lexica', desc:'Search and generate AI images.', type:'freemium', free:'Free plan, paid plans', url:'https://lexica.art'},
+  {cat:'image', icon:'🏟️', name:'Playground AI', desc:'Create and edit AI images easily.', type:'freemium', free:'Free images daily, paid plans', url:'https://playgroundai.com'},
+  {cat:'image', icon:'🧪', name:'Stable Diffusion Online', desc:'Run Stable Diffusion free in the browser.', type:'free', free:'Free to use', url:'https://stablediffusionweb.com'},
+  {cat:'image', icon:'🧙', name:'Mage.space', desc:'AI image generator with many models.', type:'freemium', free:'Free plan, paid plans', url:'https://www.mage.space'},
+  {cat:'image', icon:'🎴', name:'Tensor.Art', desc:'AI art community with daily free credits.', type:'freemium', free:'Free credits daily, paid plans', url:'https://tensor.art'},
+  {cat:'image', icon:'🌊', name:'SeaArt', desc:'AI art generator with tons of styles.', type:'freemium', free:'Free credits daily, paid plans', url:'https://www.seaart.ai'},
+  {cat:'image', icon:'🗂️', name:'Civitai', desc:'AI models and image generation hub.', type:'free', free:'Free to use', url:'https://civitai.com'},
+  {cat:'image', icon:'⚡', name:'Krea', desc:'Realtime AI image generation and upscaling.', type:'freemium', free:'Free plan, paid plans', url:'https://www.krea.ai'},
+  {cat:'image', icon:'✒️', name:'Recraft', desc:'AI design — vectors, icons, mockups.', type:'freemium', free:'Free credits daily, paid plans', url:'https://www.recraft.ai'},
+  {cat:'image', icon:'🖌️', name:'Freepik AI', desc:'AI images plus millions of stock assets.', type:'freemium', free:'Free plan, Premium is paid', url:'https://www.freepik.com'},
+  {cat:'image', icon:'🪟', name:'Microsoft Designer', desc:'AI designs for social posts and more.', type:'free', free:'Free with a Microsoft account', url:'https://designer.microsoft.com'},
+  {cat:'image', icon:'🧫', name:'ImageFX', desc:'Google Labs\u2019 AI image maker.', type:'free', free:'Free to use', url:'https://labs.google/fx'},
+  {cat:'image', icon:'💠', name:'DreamStudio', desc:'Stability AI\u2019s official image studio.', type:'freemium', free:'Free credits once, then paid', url:'https://dreamstudio.ai'},
+  {cat:'image', icon:'🧬', name:'Artbreeder', desc:'Breed and evolve AI images.', type:'freemium', free:'Free plan, paid plans', url:'https://www.artbreeder.com'},
+  {cat:'image', icon:'🤖', name:'DeepAI', desc:'Simple AI image and chat tools.', type:'freemium', free:'Free plan, Pro is paid', url:'https://deepai.org'},
+  {cat:'image', icon:'📷', name:'Fotor', desc:'Photo editor with AI generation.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.fotor.com'},
+  {cat:'image', icon:'🖥️', name:'Pixlr', desc:'Online photo editor with AI tools.', type:'freemium', free:'Free plan, Premium is paid', url:'https://pixlr.com'},
+  {cat:'image', icon:'🫛', name:'Photopea', desc:'Free Photoshop-style editor in browser.', type:'free', free:'Free (with ads)', url:'https://www.photopea.com'},
+  {cat:'image', icon:'✂️', name:'Remove.bg', desc:'Remove any photo background in one click.', type:'freemium', free:'Free previews, paid HD', url:'https://www.remove.bg'},
+  {cat:'image', icon:'🧹', name:'Cleanup.pictures', desc:'Erase unwanted objects from photos.', type:'freemium', free:'Free plan, Pro is paid', url:'https://cleanup.pictures'},
+  {cat:'image', icon:'🔍', name:'Upscale.media', desc:'Enlarge images without losing quality.', type:'freemium', free:'Free tries, paid plans', url:'https://www.upscale.media'},
+  {cat:'image', icon:'💎', name:'Let\u2019s Enhance', desc:'AI image upscaler and enhancer.', type:'freemium', free:'Free tries, paid plans', url:'https://letsenhance.io'},
+  {cat:'image', icon:'📱', name:'Pixelcut', desc:'Product photos and designs with AI.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.pixelcut.ai'},
+  {cat:'image', icon:'🏠', name:'Photoroom', desc:'Product photos with instant backgrounds.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.photoroom.com'},
+  {cat:'image', icon:'🧰', name:'Adobe Express', desc:'Quick designs, flyers and social posts.', type:'freemium', free:'Free plan, Premium is paid', url:'https://express.adobe.com'},
+  {cat:'image', icon:'🏢', name:'Designs.ai', desc:'AI logos, videos and designs suite.', type:'paid', free:'Paid plans only', url:'https://designs.ai'},
+  {cat:'image', icon:'🅻', name:'Looka', desc:'AI logo maker and brand kit.', type:'freemium', free:'Free to design, pay to download', url:'https://looka.com'},
+  {cat:'image', icon:'🖼️', name:'Getimg.ai', desc:'Generate and edit images with AI.', type:'freemium', free:'Free credits, paid plans', url:'https://getimg.ai'},
+  {cat:'image', icon:'✨', name:'Imagine.art', desc:'AI image generator with many styles.', type:'freemium', free:'Free plan, paid plans', url:'https://www.imagine.art'},
+  {cat:'image', icon:'🎨', name:'Artguru', desc:'Turn photos and text into AI art.', type:'freemium', free:'Free tries, paid plans', url:'https://www.artguru.ai'},
+  {cat:'image', icon:'📸', name:'PicWish', desc:'Photo enhancer and background remover.', type:'freemium', free:'Free plan, paid credits', url:'https://picwish.com'},
+  {cat:'image', icon:'🚀', name:'VanceAI', desc:'AI photo enhancer, sharpener, upscaler.', type:'freemium', free:'Free credits, paid packs', url:'https://vanceai.com'},
+  {cat:'image', icon:'🔎', name:'AI Image Enlarger', desc:'Upscale images without quality loss.', type:'freemium', free:'Free plan, paid plans', url:'https://imglarger.com'},
+  {cat:'image', icon:'📱', name:'Remini', desc:'AI photo enhancer for old pictures.', type:'freemium', free:'Free plan, Pro is paid', url:'https://remini.ai'},
+  {cat:'image', icon:'🤳', name:'FaceApp', desc:'Famous face filters and edits.', type:'freemium', free:'Free filters, Pro is paid', url:'https://www.faceapp.com'},
+  {cat:'image', icon:'🎨', name:'Picsart', desc:'Photo and video editor with AI.', type:'freemium', free:'Free plan, Gold is paid', url:'https://picsart.com'},
+  {cat:'image', icon:'🌀', name:'Prisma', desc:'Turn photos into paintings.', type:'freemium', free:'Free plan, paid plans', url:'https://prisma-ai.com'},
+  {cat:'image', icon:'🖌️', name:'VistaCreate', desc:'Designs and templates for social media.', type:'freemium', free:'Free plan, Pro is paid', url:'https://create.vista.com'},
+  {cat:'image', icon:'⚡', name:'Snappa', desc:'Quick online graphics maker.', type:'freemium', free:'Free plan, Pro is paid', url:'https://snappa.com'},
+  {cat:'image', icon:'📊', name:'Piktochart', desc:'Infographics and presentations easily.', type:'freemium', free:'Free plan, paid plans', url:'https://piktochart.com'},
+  {cat:'image', icon:'📈', name:'Venngage', desc:'Infographic and report maker.', type:'freemium', free:'Free plan, paid plans', url:'https://venngage.com'},
+  {cat:'image', icon:'📉', name:'Infogram', desc:'Charts, maps and infographics.', type:'freemium', free:'Free plan, paid plans', url:'https://infogram.com'},
+  {cat:'image', icon:'🎬', name:'Visme', desc:'Presentations, docs and designs.', type:'freemium', free:'Free plan, paid plans', url:'https://www.visme.co'},
+  {cat:'image', icon:'🧩', name:'Creately', desc:'Diagrams and visual collaboration.', type:'freemium', free:'Free plan, paid plans', url:'https://creately.com'},
+  {cat:'image', icon:'🗺️', name:'Lucidchart', desc:'Diagram and flowchart maker.', type:'freemium', free:'Free plan, paid plans', url:'https://www.lucidchart.com'},
+  {cat:'image', icon:'✏️', name:'Excalidraw', desc:'Hand-drawn style whiteboard, free.', type:'free', free:'Free to use', url:'https://excalidraw.com'},
+  {cat:'image', icon:'🎨', name:'tldraw', desc:'Free infinite canvas whiteboard.', type:'free', free:'Free to use', url:'https://www.tldraw.com'},
+  {cat:'image', icon:'🖊️', name:'Penpot', desc:'Free open-source design tool.', type:'free', free:'Free to use', url:'https://penpot.app'},
+  {cat:'image', icon:'🌙', name:'Lunacy', desc:'Free graphic design software by Icons8.', type:'free', free:'Free to use', url:'https://icons8.com/lunacy'},
+  {cat:'image', icon:'🔷', name:'Vectr', desc:'Free vector graphics editor.', type:'free', free:'Free to use', url:'https://vectr.com'},
+  {cat:'image', icon:'🎞️', name:'Rive', desc:'Interactive animations for apps and web.', type:'freemium', free:'Free plan, paid plans', url:'https://rive.app'},
+  {cat:'image', icon:'💫', name:'LottieFiles', desc:'Lightweight animations library and tools.', type:'freemium', free:'Free plan, paid plans', url:'https://lottiefiles.com'},
+  {cat:'image', icon:'🌊', name:'Haikei', desc:'Generate SVG waves and backgrounds.', type:'free', free:'Free to use', url:'https://haikei.app'},
+  {cat:'image', icon:'🎨', name:'Coolors', desc:'Color palette generator loved by designers.', type:'freemium', free:'Free plan, Pro is paid', url:'https://coolors.co'},
+  {cat:'image', icon:'🎨', name:'Paletton', desc:'Color scheme designer.', type:'free', free:'Free to use', url:'https://paletton.com'},
+  {cat:'image', icon:'🔤', name:'Fontjoy', desc:'AI font pairing for your designs.', type:'free', free:'Free to use', url:'https://fontjoy.com'},
+  {cat:'image', icon:'🌈', name:'Colormind', desc:'AI color palette generator.', type:'free', free:'Free to use', url:'https://colormind.io'},
+  {cat:'image', icon:'🏷️', name:'Brandmark', desc:'AI logo design and brand tools.', type:'freemium', free:'Free to design, pay to download', url:'https://brandmark.io'},
+  {cat:'image', icon:'🦈', name:'Hatchful', desc:'Shopify\u2019s free logo maker.', type:'free', free:'Free to use', url:'https://hatchful.shopify.com'},
+  {cat:'image', icon:'✒️', name:'DesignEvo', desc:'Online logo maker with templates.', type:'freemium', free:'Free low-res, paid HD', url:'https://www.designevo.com'},
+  {cat:'image', icon:'🖼️', name:'Placeit', desc:'Mockups, logos and designs by Envato.', type:'freemium', free:'Free items, subscription for all', url:'https://placeit.net'},
+  {cat:'image', icon:'📱', name:'Smartmockups', desc:'Create product mockups in seconds.', type:'freemium', free:'Free plan, Premium is paid', url:'https://smartmockups.com'},
+  {cat:'image', icon:'📷', name:'Unsplash', desc:'Beautiful free stock photos.', type:'free', free:'Free to use', url:'https://unsplash.com'},
+  {cat:'image', icon:'📸', name:'Pexels', desc:'Free stock photos and videos.', type:'free', free:'Free to use', url:'https://www.pexels.com'},
+  {cat:'image', icon:'🖼️', name:'Pixabay', desc:'Free images, videos and music.', type:'free', free:'Free to use', url:'https://pixabay.com'},
+  {cat:'image', icon:'📷', name:'StockSnap', desc:'Free high-resolution stock photos.', type:'free', free:'Free to use', url:'https://stocksnap.io'},
+  {cat:'image', icon:'🛍️', name:'Burst', desc:'Free stock photos by Shopify.', type:'free', free:'Free to use', url:'https://burst.shopify.com'},
+  {cat:'image', icon:'☕', name:'Kaboompics', desc:'Free photos for bloggers and creators.', type:'free', free:'Free to use', url:'https://kaboompics.com'},
+  {cat:'image', icon:'🎉', name:'Gratisography', desc:'Fun, quirky free stock photos.', type:'free', free:'Free to use', url:'https://gratisography.com'},
+  {cat:'image', icon:'🖼️', name:'Reshot', desc:'Free unique stock photos and icons.', type:'free', free:'Free to use', url:'https://www.reshot.com'},
+  {cat:'image', icon:'💎', name:'Shutterstock', desc:'Huge premium stock library.', type:'paid', free:'Paid plans and licences', url:'https://www.shutterstock.com'},
+  {cat:'image', icon:'🏛️', name:'Getty Images', desc:'Premium news and stock imagery.', type:'paid', free:'Paid licences', url:'https://www.gettyimages.com'},
+  {cat:'image', icon:'🌟', name:'Adobe Stock', desc:'Premium stock photos and videos.', type:'paid', free:'Free trial images, then paid', url:'https://stock.adobe.com'},
+  {cat:'image', icon:'🧩', name:'Vecteezy', desc:'Stock vectors, photos and videos.', type:'freemium', free:'Free items, Pro is paid', url:'https://www.vecteezy.com'},
+  {cat:'image', icon:'🌿', name:'Envato Elements', desc:'Unlimited creative assets subscription.', type:'paid', free:'Paid subscription', url:'https://elements.envato.com'},
+  {cat:'image', icon:'📦', name:'Storyblocks', desc:'Stock media subscription for creators.', type:'paid', free:'Paid subscription', url:'https://www.storyblocks.com'},
+  // ---------- Video ----------
+  {cat:'video', icon:'🎥', name:'Kling AI', desc:'Realistic AI video from text or photo.', type:'freemium', free:'66 free credits/day, paid plans', url:'https://klingai.com'},
+  {cat:'video', icon:'🌌', name:'Luma Dream Machine', desc:'Smooth AI video clips from text/images.', type:'freemium', free:'Free plan, paid plans', url:'https://lumalabs.ai'},
+  {cat:'video', icon:'🛤️', name:'Runway', desc:'Pro AI video — text to video, effects, editing.', type:'freemium', free:'Free credits once, then paid', url:'https://runwayml.com'},
+  {cat:'video', icon:'✂️', name:'CapCut', desc:'Editor with AI script-to-video and captions.', type:'free', free:'Free to use', url:'https://www.capcut.com'},
+  {cat:'video', icon:'⚡', name:'Pika', desc:'Fast, fun AI video generation.', type:'freemium', free:'Free credits, paid plans', url:'https://pika.art'},
+  {cat:'video', icon:'🧑‍💼', name:'Synthesia', desc:'AI avatar presenter videos.', type:'paid', free:'Paid plans only', url:'https://www.synthesia.io'},
+  {cat:'video', icon:'🎤', name:'HeyGen', desc:'Talking-avatar videos and translation.', type:'freemium', free:'A few free credits, then paid', url:'https://www.heygen.com'},
+  {cat:'video', icon:'🎬', name:'Descript', desc:'Edit video by editing the text.', type:'freemium', free:'Free plan, paid plans', url:'https://www.descript.com'},
+  {cat:'video', icon:'🌊', name:'Hailuo (MiniMax)', desc:'Cinematic AI clips from text or photo.', type:'freemium', free:'Free credits, paid plans', url:'https://hailuoai.video'},
+  {cat:'video', icon:'🪐', name:'PixVerse', desc:'AI video with effects and characters.', type:'freemium', free:'Free credits daily, paid plans', url:'https://pixverse.ai'},
+  {cat:'video', icon:'🎞️', name:'Vidu', desc:'Fast AI video generation.', type:'freemium', free:'Free credits, paid plans', url:'https://www.vidu.com'},
+  {cat:'video', icon:'🎸', name:'Kaiber', desc:'Music videos and animations with AI.', type:'freemium', free:'Free trial credits, then paid', url:'https://kaiber.ai'},
+  {cat:'video', icon:'🤖', name:'InVideo AI', desc:'Type an idea, get a full video with voiceover.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://invideo.io'},
+  {cat:'video', icon:'📺', name:'Fliki', desc:'Text to video with AI voices and stock clips.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://fliki.ai'},
+  {cat:'video', icon:'🖼️', name:'Pictory', desc:'Turn scripts and blogs into videos.', type:'paid', free:'Free trial, then paid', url:'https://pictory.ai'},
+  {cat:'video', icon:'🦾', name:'Steve.AI', desc:'Animated and live-action videos from text.', type:'freemium', free:'Free plan, paid plans', url:'https://www.steve.ai'},
+  {cat:'video', icon:'💡', name:'Lumen5', desc:'Turn articles into social videos.', type:'freemium', free:'Free plan, paid plans', url:'https://lumen5.com'},
+  {cat:'video', icon:'🎚️', name:'Kapwing', desc:'Online video editor with AI tools.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.kapwing.com'},
+  {cat:'video', icon:'🎙️', name:'VEED', desc:'Video editor with AI captions and avatars.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://www.veed.io'},
+  {cat:'video', icon:'📎', name:'FlexClip', desc:'Easy video maker with AI features.', type:'freemium', free:'Free plan, paid plans', url:'https://www.flexclip.com'},
+  {cat:'video', icon:'🆔', name:'D-ID', desc:'Talking head videos from a photo.', type:'freemium', free:'Free trial credits, then paid', url:'https://www.d-id.com'},
+  {cat:'video', icon:'🏫', name:'Colossyan', desc:'AI avatar training videos.', type:'paid', free:'Free trial, then paid', url:'https://www.colossyan.com'},
+  {cat:'video', icon:'✂️', name:'Opus Clip', desc:'Turn long videos into viral Shorts.', type:'freemium', free:'Free plan, paid plans', url:'https://www.opus.pro'},
+  {cat:'video', icon:'💬', name:'Submagic', desc:'Captions and effects for Shorts and Reels.', type:'freemium', free:'Free tries, paid plans', url:'https://www.submagic.co'},
+  {cat:'video', icon:'🌳', name:'Renderforest', desc:'Videos, logos and websites maker.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://www.renderforest.com'},
+  {cat:'video', icon:'😀', name:'Biteable', desc:'Simple animated video maker.', type:'freemium', free:'Free trial, then paid', url:'https://biteable.com'},
+  {cat:'video', icon:'🎈', name:'Powtoon', desc:'Animated presentations and videos.', type:'freemium', free:'Free plan, paid plans', url:'https://www.powtoon.com'},
+  {cat:'video', icon:'🎨', name:'Vyond', desc:'Professional animated videos.', type:'paid', free:'Free trial, then paid', url:'https://www.vyond.com'},
+  {cat:'video', icon:'🕺', name:'Viggle', desc:'Animate characters with your movements.', type:'freemium', free:'Free credits, paid plans', url:'https://viggle.ai'},
+  {cat:'video', icon:'🎭', name:'DomoAI', desc:'Restyle videos into anime and more.', type:'freemium', free:'Free trial, then paid', url:'https://www.domoai.app'},
+  {cat:'video', icon:'📼', name:'Animoto', desc:'Drag-and-drop marketing videos.', type:'freemium', free:'Free plan, paid plans', url:'https://animoto.com'},
+  {cat:'video', icon:'🅾️', name:'Sora', desc:'OpenAI\u2019s text-to-video model.', type:'paid', free:'Needs a ChatGPT paid plan', url:'https://sora.chatgpt.com'},
+  {cat:'video', icon:'🌸', name:'Dreamina', desc:'CapCut\u2019s AI image and video maker.', type:'freemium', free:'Free credits daily, paid plans', url:'https://dreamina.capcut.com'},
+  {cat:'video', icon:'🎬', name:'LTX Studio', desc:'AI film studio — script to scenes.', type:'freemium', free:'Free plan, paid plans', url:'https://ltx.studio'},
+  {cat:'video', icon:'🧑', name:'Hedra', desc:'Talking character videos with emotion.', type:'freemium', free:'Free credits, paid plans', url:'https://www.hedra.com'},
+  {cat:'video', icon:'🎥', name:'Vidnoz', desc:'Free AI video generator and avatars.', type:'freemium', free:'Free plan, paid plans', url:'https://www.vidnoz.com'},
+  {cat:'video', icon:'🥭', name:'Mango Animate', desc:'Animated videos and character maker.', type:'freemium', free:'Free plan, paid plans', url:'https://mangoanimate.com'},
+  {cat:'video', icon:'🎨', name:'Animaker', desc:'Make animated videos online easily.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://www.animaker.com'},
+  {cat:'video', icon:'✏️', name:'Doodly', desc:'Whiteboard doodle videos.', type:'paid', free:'Paid plans only', url:'https://www.doodly.com'},
+  {cat:'video', icon:'🎞️', name:'Toonly', desc:'Cartoon explainer videos.', type:'paid', free:'Paid plans only', url:'https://www.toonly.com'},
+  {cat:'video', icon:'🎬', name:'CreateStudio', desc:'3D character animation videos.', type:'paid', free:'Paid plans only', url:'https://createstudio.com'},
+  {cat:'video', icon:'🖊️', name:'VideoScribe', desc:'Whiteboard animation software.', type:'paid', free:'Free trial, then paid', url:'https://www.videoscribe.co'},
+  {cat:'video', icon:'🌊', name:'Wave.video', desc:'Video maker, editor and live streaming.', type:'freemium', free:'Free plan, paid plans', url:'https://wave.video'},
+  {cat:'video', icon:'🎥', name:'WeVideo', desc:'Online video editor for everyone.', type:'freemium', free:'Free plan, paid plans', url:'https://www.wevideo.com'},
+  {cat:'video', icon:'📱', name:'KineMaster', desc:'Mobile video editor with AI tools.', type:'freemium', free:'Free plan (watermark), paid plans', url:'https://www.kinemaster.com'},
+  {cat:'video', icon:'🎬', name:'Filmora', desc:'Easy video editor by Wondershare.', type:'freemium', free:'Free trial exports, paid plans', url:'https://filmora.wondershare.com'},
+  {cat:'video', icon:'✂️', name:'Shotcut', desc:'Free open-source video editor.', type:'free', free:'Free to use', url:'https://shotcut.org'},
+  {cat:'video', icon:'🎞️', name:'OpenShot', desc:'Free, simple video editor.', type:'free', free:'Free to use', url:'https://www.openshot.org'},
+  {cat:'video', icon:'🎛️', name:'DaVinci Resolve', desc:'Pro editing and color grading.', type:'freemium', free:'Powerful free version, Studio is paid', url:'https://www.blackmagicdesign.com/products/davinciresolve'},
+  {cat:'video', icon:'💡', name:'Lightworks', desc:'Pro editor used on real films.', type:'freemium', free:'Free plan, paid plans', url:'https://lwks.com'},
+  {cat:'video', icon:'🐘', name:'Blender', desc:'Free 3D creation and video editing.', type:'free', free:'Free to use', url:'https://www.blender.org'},
+  {cat:'video', icon:'📡', name:'OBS Studio', desc:'Free recording and live streaming.', type:'free', free:'Free to use', url:'https://obsproject.com'},
+  {cat:'video', icon:'🎮', name:'Streamlabs', desc:'Streaming tools for creators.', type:'freemium', free:'Free plan, Ultra is paid', url:'https://streamlabs.com'},
+  {cat:'video', icon:'🔁', name:'Restream', desc:'Stream to many platforms at once.', type:'freemium', free:'Free plan, paid plans', url:'https://restream.io'},
+  {cat:'video', icon:'🏖️', name:'Riverside', desc:'Studio-quality remote recording.', type:'freemium', free:'Free plan, paid plans', url:'https://riverside.fm'},
+  {cat:'video', icon:'🎙️', name:'Zencastr', desc:'Podcast recording in high quality.', type:'freemium', free:'Free plan, paid plans', url:'https://zencastr.com'},
+  {cat:'video', icon:'🎥', name:'Camtasia', desc:'Screen recording and video editing.', type:'paid', free:'Free trial, then paid', url:'https://www.techsmith.com/video-editor.html'},
+  {cat:'video', icon:'🖥️', name:'ScreenPal', desc:'Screen recorder and video editor.', type:'freemium', free:'Free plan, paid plans', url:'https://screenpal.com'},
+  {cat:'video', icon:'📹', name:'Loom', desc:'Record quick videos instead of meetings.', type:'freemium', free:'Free plan, paid plans', url:'https://www.loom.com'},
+  {cat:'video', icon:'📼', name:'Vidyard', desc:'Video for sales and teams.', type:'freemium', free:'Free plan, paid plans', url:'https://www.vidyard.com'},
+  {cat:'video', icon:'🤖', name:'Elai.io', desc:'AI avatar videos in 75+ languages.', type:'paid', free:'Free trial, then paid', url:'https://elai.io'},
+  {cat:'video', icon:'🧑‍💻', name:'Tavus', desc:'Personalised AI avatar videos.', type:'paid', free:'Paid plans only', url:'https://www.tavus.io'},
+  {cat:'video', icon:'🧠', name:'DeepBrain AI', desc:'AI avatar studios and presenters.', type:'paid', free:'Paid plans only', url:'https://www.deepbrain.io'},
+  {cat:'video', icon:'📱', name:'Wondershare Virbo', desc:'AI avatar video generator.', type:'freemium', free:'Free credits, paid plans', url:'https://virbo.wondershare.com'},
+  {cat:'video', icon:'✂️', name:'Vizard', desc:'Clip long videos into Shorts with AI.', type:'freemium', free:'Free plan, paid plans', url:'https://vizard.ai'},
+  {cat:'video', icon:'🤙', name:'Klap', desc:'AI shorts from any YouTube video.', type:'freemium', free:'Free trial, then paid', url:'https://klap.app'},
+  {cat:'video', icon:'2️⃣', name:'2short.ai', desc:'Turn videos into Shorts automatically.', type:'freemium', free:'Free plan, paid plans', url:'https://2short.ai'},
+  {cat:'video', icon:'🎨', name:'Crayo', desc:'AI faceless Shorts and TikToks.', type:'freemium', free:'Free trial, then paid', url:'https://crayo.ai'},
+  {cat:'video', icon:'🔄', name:'Revid', desc:'AI viral Shorts maker.', type:'freemium', free:'Free plan, paid plans', url:'https://www.revid.ai'},
+  {cat:'video', icon:'💬', name:'Zubtitle', desc:'Add captions to videos fast.', type:'freemium', free:'Free video monthly, paid plans', url:'https://zubtitle.com'},
+  {cat:'video', icon:'🎧', name:'Headliner', desc:'Audiograms and clips for podcasts.', type:'freemium', free:'Free plan, paid plans', url:'https://www.headliner.app'},
+  {cat:'video', icon:'💎', name:'Topaz Video AI', desc:'Upscale and enhance video quality.', type:'paid', free:'Paid licence', url:'https://www.topazlabs.com/topaz-video-ai'},
+  {cat:'video', icon:'🧠', name:'Neural.love', desc:'AI video enhancer and generator.', type:'freemium', free:'Free credits, paid plans', url:'https://neural.love'},
+  {cat:'video', icon:'📈', name:'TensorPix', desc:'Online AI video enhancement.', type:'freemium', free:'Free trial, then paid', url:'https://tensorpix.ai'},
+  // ---------- Voice & Music ----------
+  {cat:'voice', icon:'🎵', name:'Suno', desc:'Full songs with vocals from a prompt.', type:'freemium', free:'Free credits daily, paid plans', url:'https://suno.com'},
+  {cat:'voice', icon:'🎶', name:'Udio', desc:'AI songs in any style, in seconds.', type:'freemium', free:'Free plan, paid plans', url:'https://www.udio.com'},
+  {cat:'voice', icon:'🗣️', name:'ElevenLabs', desc:'The most realistic AI voices.', type:'freemium', free:'Free plan, paid plans', url:'https://elevenlabs.io'},
+  {cat:'voice', icon:'📢', name:'TTSMaker', desc:'Text-to-speech, many voices, no signup.', type:'free', free:'Free to use', url:'https://ttsmaker.com'},
+  {cat:'voice', icon:'🎧', name:'Murf AI', desc:'Studio-quality AI voiceovers.', type:'freemium', free:'Free trial minutes, then paid', url:'https://murf.ai'},
+  {cat:'voice', icon:'▶️', name:'PlayHT', desc:'AI voices and voice cloning.', type:'freemium', free:'Free plan, paid plans', url:'https://play.ht'},
+  {cat:'voice', icon:'🎙️', name:'Listnr', desc:'Text to speech and podcasts with AI.', type:'freemium', free:'Free plan, paid plans', url:'https://listnr.ai'},
+  {cat:'voice', icon:'👤', name:'Resemble AI', desc:'Clone and create AI voices.', type:'paid', free:'Free trial, then paid', url:'https://www.resemble.ai'},
+  {cat:'voice', icon:'🧰', name:'Kits AI', desc:'Change any singing voice with AI.', type:'freemium', free:'Free plan, paid plans', url:'https://www.kits.ai'},
+  {cat:'voice', icon:'🎤', name:'Musicfy', desc:'Make AI covers and songs.', type:'freemium', free:'Free plan, paid plans', url:'https://musicfy.lol'},
+  {cat:'voice', icon:'🎼', name:'Beatoven.ai', desc:'Background music for your videos.', type:'freemium', free:'Free plan, paid plans', url:'https://www.beatoven.ai'},
+  {cat:'voice', icon:'🎹', name:'Soundraw', desc:'Generate royalty-free music tracks.', type:'paid', free:'Listen free, pay to download', url:'https://soundraw.io'},
+  {cat:'voice', icon:'🤖', name:'Boomy', desc:'Create and release AI songs.', type:'freemium', free:'Free plan, paid plans', url:'https://boomy.com'},
+  {cat:'voice', icon:'🎻', name:'AIVA', desc:'AI composer for emotional soundtracks.', type:'freemium', free:'Free plan, paid plans', url:'https://www.aiva.ai'},
+  {cat:'voice', icon:'🔊', name:'Loudly', desc:'AI music generator for creators.', type:'freemium', free:'Free plan, paid plans', url:'https://www.loudly.com'},
+  {cat:'voice', icon:'🎛️', name:'Mubert', desc:'AI music for videos and apps.', type:'freemium', free:'Free plan, paid plans', url:'https://mubert.com'},
+  {cat:'voice', icon:'🎮', name:'Voicemod', desc:'Realtime voice changer for calls and games.', type:'freemium', free:'Free plan, Pro is paid', url:'https://www.voicemod.net'},
+  {cat:'voice', icon:'🧑‍🎤', name:'Voice.ai', desc:'Change your voice live with AI.', type:'freemium', free:'Free plan, paid plans', url:'https://voice.ai'},
+  {cat:'voice', icon:'🎬', name:'Narakeet', desc:'Text to speech videos and slides.', type:'freemium', free:'Free tries, paid plans', url:'https://www.narakeet.com'},
+  {cat:'voice', icon:'📚', name:'Speechify', desc:'Listen to any text read aloud.', type:'freemium', free:'Free plan, Premium is paid', url:'https://speechify.com'},
+  {cat:'voice', icon:'👂', name:'NaturalReader', desc:'Natural text-to-speech voices.', type:'freemium', free:'Free plan, paid plans', url:'https://www.naturalreaders.com'},
+  {cat:'voice', icon:'🎭', name:'FakeYou', desc:'Fun celebrity and character voices.', type:'free', free:'Free to use', url:'https://fakeyou.com'},
+  {cat:'voice', icon:'🎚️', name:'LALAL.AI', desc:'Split songs into vocals and instruments.', type:'freemium', free:'Free minutes, paid packs', url:'https://www.lalal.ai'},
+  {cat:'voice', icon:'🥁', name:'Moises', desc:'Separate stems and remix any song.', type:'freemium', free:'Free plan, Premium is paid', url:'https://moises.ai'},
+  {cat:'voice', icon:'🎤', name:'Vocal Remover', desc:'Remove vocals from any song, free.', type:'free', free:'Free to use', url:'https://vocalremover.org'},
+  {cat:'voice', icon:'🎙️', name:'Adobe Podcast', desc:'Make voice recordings sound studio-clean.', type:'freemium', free:'Free plan, paid plans', url:'https://podcast.adobe.com'},
+  {cat:'voice', icon:'🎭', name:'Altered', desc:'Pro voice changing studio.', type:'paid', free:'Free trial, then paid', url:'https://www.altered.ai'},
+  {cat:'voice', icon:'🎬', name:'Respeecher', desc:'Hollywood-grade voice conversion.', type:'paid', free:'Paid plans only', url:'https://www.respeecher.com'},
+  {cat:'voice', icon:'⚖️', name:'Weights', desc:'Free AI voice models community (RVC).', type:'freemium', free:'Free plan, paid plans', url:'https://www.weights.gg'},
+  {cat:'voice', icon:'🎧', name:'BandLab', desc:'Free music studio and social DAW.', type:'free', free:'Free to use', url:'https://www.bandlab.com'},
+  {cat:'voice', icon:'🎹', name:'Soundtrap', desc:'Online music studio by Spotify.', type:'freemium', free:'Free plan, paid plans', url:'https://www.soundtrap.com'},
+  {cat:'voice', icon:'🎛️', name:'Soundation', desc:'Browser music production studio.', type:'freemium', free:'Free plan, paid plans', url:'https://soundation.com'},
+  {cat:'voice', icon:'🎵', name:'Audiotool', desc:'Free online music studio.', type:'free', free:'Free to use', url:'https://www.audiotool.com'},
+  {cat:'voice', icon:'🎚️', name:'Amped Studio', desc:'Online DAW with AI assistant.', type:'freemium', free:'Free plan, Premium is paid', url:'https://ampedstudio.com'},
+  {cat:'voice', icon:'🐧', name:'LMMS', desc:'Free open-source music production.', type:'free', free:'Free to use', url:'https://lmms.io'},
+  {cat:'voice', icon:'🌊', name:'Audacity', desc:'The famous free audio editor.', type:'free', free:'Free to use', url:'https://www.audacityteam.org'},
+  {cat:'voice', icon:'🎧', name:'Ocenaudio', desc:'Easy free audio editor.', type:'free', free:'Free to use', url:'https://www.ocenaudio.com'},
+  {cat:'voice', icon:'🍰', name:'Cakewalk', desc:'Pro DAW by BandLab, completely free.', type:'free', free:'Free to use', url:'https://www.cakewalk.com'},
+  {cat:'voice', icon:'🎹', name:'FL Studio', desc:'Legendary music production DAW.', type:'paid', free:'Free trial, licence is paid', url:'https://www.image-line.com'},
+  {cat:'voice', icon:'🎛️', name:'REAPER', desc:'Powerful DAW with a free evaluation.', type:'freemium', free:'Free evaluation, cheap licence', url:'https://www.reaper.fm'},
+  {cat:'voice', icon:'💿', name:'LANDR', desc:'AI mastering and music release.', type:'freemium', free:'Free plan, paid plans', url:'https://www.landr.com'},
+  {cat:'voice', icon:'🎚️', name:'eMastered', desc:'AI audio mastering online.', type:'freemium', free:'Free previews, paid downloads', url:'https://emastered.com'},
+  {cat:'voice', icon:'🎙️', name:'Auphonic', desc:'AI audio post-production for podcasts.', type:'freemium', free:'Free hours monthly, paid plans', url:'https://auphonic.com'},
+  {cat:'voice', icon:'🧹', name:'Cleanvoice', desc:'Removes filler words and mouth sounds.', type:'freemium', free:'Free trial, then paid', url:'https://cleanvoice.ai'},
+  {cat:'voice', icon:'🏰', name:'Podcastle', desc:'AI podcast recording and editing.', type:'freemium', free:'Free plan, paid plans', url:'https://podcastle.ai'},
+  {cat:'voice', icon:'🎵', name:'Uppbeat', desc:'Free music and sounds for creators.', type:'freemium', free:'Free plan, Premium is paid', url:'https://uppbeat.io'},
+  {cat:'voice', icon:'🎶', name:'Pixabay Music', desc:'Free music downloads from Pixabay.', type:'free', free:'Free to use', url:'https://pixabay.com/music'},
+  {cat:'voice', icon:'🎼', name:'Bensound', desc:'Royalty-free music for videos.', type:'freemium', free:'Free tracks with credit, licences paid', url:'https://www.bensound.com'},
+  {cat:'voice', icon:'🆓', name:'Free Music Archive', desc:'Free music downloads library.', type:'free', free:'Free to use', url:'https://freemusicarchive.org'},
+  {cat:'voice', icon:'🎻', name:'Incompetech', desc:'Kevin MacLeod\u2019s free royalty-free music.', type:'free', free:'Free with credit', url:'https://incompetech.com'},
+  {cat:'voice', icon:'🎧', name:'Chosic', desc:'Find free music for your projects.', type:'free', free:'Free to use', url:'https://www.chosic.com'},
+  {cat:'voice', icon:'🎵', name:'Slip.stream', desc:'Copyright-free music for streamers.', type:'freemium', free:'Free plan, paid plans', url:'https://slip.stream'},
+  {cat:'voice', icon:'🎬', name:'Artlist', desc:'Music and footage licensing for creators.', type:'paid', free:'Paid subscription', url:'https://artlist.io'},
+  {cat:'voice', icon:'🎙️', name:'Epidemic Sound', desc:'Premium music and sound effects.', type:'paid', free:'Paid subscription', url:'https://www.epidemicsound.com'},
+  {cat:'voice', icon:'🔊', name:'AudioJungle', desc:'Buy royalty-free music and effects.', type:'paid', free:'Paid tracks', url:'https://audiojungle.net'},
+  {cat:'voice', icon:'🗣️', name:'Voicemaker', desc:'Text to speech with AI voices.', type:'freemium', free:'Free plan, paid plans', url:'https://voicemaker.in'},
+  {cat:'voice', icon:'📖', name:'TTSReader', desc:'Reads text aloud instantly, free.', type:'free', free:'Free to use', url:'https://ttsreader.com'},
+  {cat:'voice', icon:'🎤', name:'LOVO', desc:'Genny — AI voices for videos and ads.', type:'freemium', free:'Free trial, then paid', url:'https://lovo.ai'},
+  {cat:'voice', icon:'☁️', name:'Azure Speech', desc:'Microsoft\u2019s text-to-speech service.', type:'freemium', free:'Free monthly quota, then paid', url:'https://azure.microsoft.com/en-us/products/ai-services/text-to-speech'},
+  {cat:'voice', icon:'🎧', name:'Deepgram', desc:'Fast speech-to-text API with free credit.', type:'freemium', free:'Free credit, then paid', url:'https://deepgram.com'},
+  {cat:'voice', icon:'🧑‍💻', name:'AssemblyAI', desc:'Transcription and speech understanding API.', type:'freemium', free:'Free hours, then paid', url:'https://www.assemblyai.com'},
+  {cat:'voice', icon:'🎙️', name:'Sonix', desc:'Fast automated transcription service.', type:'paid', free:'Free trial, then paid', url:'https://sonix.ai'},
+  {cat:'voice', icon:'📝', name:'Rev', desc:'Human and AI transcription services.', type:'paid', free:'Paid per minute', url:'https://www.rev.com'},
+  {cat:'voice', icon:'🎚️', name:'Voicemeeter', desc:'Virtual audio mixer for Windows.', type:'free', free:'Free (donationware)', url:'https://vb-audio.com/Voicemeeter'},
+  {cat:'voice', icon:'🟢', name:'NVIDIA RTX Voice', desc:'AI noise removal for RTX owners.', type:'free', free:'Free for RTX owners', url:'https://www.nvidia.com/en-us/geforce/guides/nvidia-rtx-voice-setup-guide'},
+];
+
+const grid = document.getElementById('grid');
+const emptyMsg = document.getElementById('emptyMsg');
+const searchInput = document.getElementById('searchInput');
+const moreBtn = document.getElementById('moreBtn');
+const PAGE = 24;
+let activeCat = 'all', shown = PAGE;
+
+/* counts */
+const counts = { all: TOOLS.length };
+TOOLS.forEach(t => counts[t.cat] = (counts[t.cat]||0)+1);
+document.getElementById('toolCount').textContent = TOOLS.length + '+';
+document.querySelectorAll('.chip').forEach(c => {
+  const n = counts[c.dataset.cat] || 0;
+  c.textContent = c.textContent + ' (' + n + ')';
+});
+
+function typeLabel(t){ return t==='free' ? '✅ FREE' : t==='paid' ? '💰 PAID' : '🟡 FREE + PAID'; }
+
+function currentList(){
+  const q = searchInput.value.trim().toLowerCase();
+  return TOOLS.filter(t =>
+    (activeCat==='all' || t.cat===activeCat) &&
+    (!q || (t.name+' '+t.desc+' '+t.cat).toLowerCase().includes(q))
+  );
+}
+function render(){
+  const list = currentList();
+  grid.innerHTML = list.slice(0, shown).map(t => `
+    <div class="tool-card">
+      <div class="icon">${t.icon}</div>
+      <h3>${t.name}</h3>
+      <p>${t.desc}</p>
+      <span class="badge ${t.type}">${typeLabel(t.type)}</span>
+      <div class="detail">${t.free}</div>
+      <a class="visit" href="${t.url}" target="_blank" rel="noopener">Visit ↗</a>
+    </div>`).join('');
+  emptyMsg.style.display = list.length ? 'none' : 'block';
+  moreBtn.style.display = list.length > shown ? 'inline-block' : 'none';
+  moreBtn.textContent = 'Load more tools (' + (list.length - shown) + ' more)';
+}
+document.getElementById('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  b.classList.add('active'); activeCat = b.dataset.cat; shown = PAGE; render();
+});
+searchInput.addEventListener('input', () => { shown = PAGE; render(); });
+moreBtn.addEventListener('click', () => { shown += PAGE; render(); });
+render();
+
+/* QR maker */
+document.getElementById('qrBtn').addEventListener('click', () => {
+  const txt = document.getElementById('qrText').value.trim();
+  const out = document.getElementById('qrOut');
+  out.innerHTML = '';
+  if(!txt){ out.innerHTML = '<p class="out">Type something first.</p>'; return; }
+  new QRCode(out, { text: txt, width: 200, height: 200 });
+});
+
+/* Image compressor */
+const imgQ = document.getElementById('imgQuality');
+imgQ.addEventListener('input', () => document.getElementById('imgQVal').textContent = imgQ.value + '%');
+document.getElementById('imgBtn').addEventListener('click', () => {
+  const f = document.getElementById('imgFile').files[0];
+  const out = document.getElementById('imgOut');
+  if(!f){ out.textContent = 'Pick an image first.'; return; }
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    c.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'compressed.jpg'; a.textContent = '⬇ Download compressed image';
+      a.className = 'btn'; a.style.textDecoration = 'none'; a.style.display = 'inline-block';
+      out.innerHTML = 'Original: <b>' + (f.size/1024).toFixed(0) + ' KB</b> → Compressed: <b>' + (blob.size/1024).toFixed(0) + ' KB</b><br><br>';
+      out.appendChild(a);
+      URL.revokeObjectURL(img.src);
+    }, 'image/jpeg', imgQ.value/100);
+  };
+  img.src = URL.createObjectURL(f);
+});
+
+/* Password generator */
+const pwLen = document.getElementById('pwLen');
+pwLen.addEventListener('input', () => document.getElementById('pwLenVal').textContent = pwLen.value);
+let lastPw = '';
+document.getElementById('pwBtn').addEventListener('click', () => {
+  let chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+  if(document.getElementById('pwNum').checked) chars += '23456789';
+  if(document.getElementById('pwSym').checked) chars += '!@#$%^&*?';
+  const arr = new Uint32Array(+pwLen.value);
+  crypto.getRandomValues(arr);
+  lastPw = Array.from(arr, n => chars[n % chars.length]).join('');
+  document.getElementById('pwOut').textContent = lastPw;
+});
+document.getElementById('pwCopy').addEventListener('click', () => {
+  if(lastPw) navigator.clipboard.writeText(lastPw);
+});
+
+/* Word counter + case */
+const wcText = document.getElementById('wcText'), wcOut = document.getElementById('wcOut');
+function wcUpdate(){
+  const v = wcText.value;
+  const words = v.trim() ? v.trim().split(/\s+/).length : 0;
+  wcOut.textContent = words + ' words · ' + v.length + ' characters';
+}
+wcText.addEventListener('input', wcUpdate);
+document.querySelectorAll('[data-case]').forEach(b => b.addEventListener('click', () => {
+  const v = wcText.value;
+  if(b.dataset.case==='upper') wcText.value = v.toUpperCase();
+  if(b.dataset.case==='lower') wcText.value = v.toLowerCase();
+  if(b.dataset.case==='title') wcText.value = v.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  wcUpdate();
+}));
+document.getElementById('wcCopy').addEventListener('click', () => navigator.clipboard.writeText(wcText.value));
+
+/* Text to voice */
+const ttsRate = document.getElementById('ttsRate');
+ttsRate.addEventListener('input', () => document.getElementById('ttsRateVal').textContent = (ttsRate.value/10).toFixed(1) + '×');
+document.getElementById('ttsBtn').addEventListener('click', () => {
+  const t = document.getElementById('ttsText').value.trim();
+  if(!t) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(t);
+  u.rate = ttsRate.value/10;
+  speechSynthesis.speak(u);
+});
+document.getElementById('ttsStop').addEventListener('click', () => speechSynthesis.cancel());
+</script>
+</body>
+</html>
